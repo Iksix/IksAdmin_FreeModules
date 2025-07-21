@@ -1,0 +1,6 @@
+﻿{
+    "Message.WhOn" : "ВХ включено!",
+    "Message.WhOff" : "ВХ включено!",
+    
+    "Error.CantOnWhileAlive" : "{red}У вас нет прав включать ВХ пока вы живы"
+}
