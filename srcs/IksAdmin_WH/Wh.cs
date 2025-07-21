@@ -88,7 +88,7 @@ public partial class Main
 
             //itereate cached players
             for (int i = 0; i < CachedPlayers.Count(); i++) {
-                if (ToggleAdminEsp[player.Slot] == true)
+                if (ToggleAdminEsp[player.Slot] )
                     continue;
                     
                 //stop transmitting any entity from the glowingPlayers list
@@ -124,7 +124,7 @@ public partial class Main
         Server.NextFrame(() =>
         {
             if (player.PawnIsAlive && !player.HasPermissions("wh.doesnt_seen"))
-                SetPlayerGlowing(CachedPlayers[player.Slot], CachedPlayers[player.Slot].TeamNum);
+                SetPlayerGlowing(player, player.TeamNum);
         });
 
         return HookResult.Continue;
