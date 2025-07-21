@@ -3,4 +3,4 @@
 Тут пока не все модули, исправлю это позже
 
 ## Список модулей в этом репозитории:
-- [IksAdmin_Wh](https://github.com/Iksix/IksAdmin_FreeModules/blob/master/srcs/IksAdmin_WH/readme.md) - WH для админов
+- [WH для админов](https://github.com/Iksix/IksAdmin_FreeModules/blob/master/srcs/IksAdmin_WH/readme.md) `IksAdmin_WH`
