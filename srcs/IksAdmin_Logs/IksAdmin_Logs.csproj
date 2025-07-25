@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CounterStrikeSharp.Api" Version="1.0.328" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="IksAdminApi">
+      <HintPath>..\..\requirements\IksAdminApi.dll</HintPath>
+    </Reference>
+    <Reference Include="LogsApi">
+      <HintPath>..\..\requirements\LogsApi.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
