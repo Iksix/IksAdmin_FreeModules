@@ -4,5 +4,5 @@
 
 ## Список модулей в этом репозитории:
 - [WH для Админов](https://github.com/Iksix/IksAdmin_FreeModules/blob/master/srcs/IksAdmin_WH/readme.md) `IksAdmin_WH`
+- [Логи действий Админов](https://github.com/Iksix/IksAdmin_FreeModules/tree/master/srcs/IksAdmin_Logs/build/IksAdmin_Logs) `IksAdmin_Logs`
 - [FunCommands - Дополнительные Админские функции и прикольчики](https://github.com/Iksix/IksAdmin_FreeModules/blob/master/srcs/IksAdmin_FunCommands/readme.md) `IksAdmin_FunCommands`
-- [Логи Админских действий](https://github.com/Iksix/IksAdmin_FreeModules/tree/master/srcs/IksAdmin_Logs/build/IksAdmin_Logs) `IksAdmin_Logs`
