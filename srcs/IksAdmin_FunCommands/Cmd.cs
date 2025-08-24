@@ -33,6 +33,16 @@ public static class Cmd
         }, blockedArgs: GetBlockedIdentifiers("noclip"));
     }
     
+    public static void TurnFreeze(CCSPlayerController caller, List<string> args, CommandInfo _)
+    {
+        bool? state = args.Count > 1 ? bool.Parse(args[1]) : null;
+        
+        Api.DoActionWithIdentity(caller, args[0], (target, identityType) =>
+        {
+            FunFunctions.TurnFreeze(caller, target!, state, identityType);
+        }, blockedArgs: GetBlockedIdentifiers("freeze"));
+    }
+    
     public static void Slap(CCSPlayerController caller, List<string> args, CommandInfo _)
     {
         int force = args.Count > 1 ? int.Parse(args[1]) : 1;
@@ -100,10 +110,19 @@ public static class Cmd
         }, blockedArgs: GetBlockedIdentifiers("max_ammo"));
     }
     
+    public static void GiveWeapon(CCSPlayerController caller, List<string> args, CommandInfo _)
+    {
+        Api.DoActionWithIdentity(caller, args[0], (target, identityType) =>
+        {
+            FunFunctions.GiveWeapon(caller, target!, args[1], identityType);
+        }, blockedArgs: GetBlockedIdentifiers("give"));
+    }
+    
     public static void SavePos(CCSPlayerController caller, List<string> args, CommandInfo _)
     {
         FunFunctions.SaveTeleportPosition(caller, args[0]);
     }
+    
     
     public static void Teleport(CCSPlayerController caller, List<string> args, CommandInfo _)
     {

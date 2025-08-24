@@ -53,6 +53,20 @@ public static class FunFunctions
     public static readonly Dictionary<string, UserWeaponsSettings> PlayersWeaponsSettings = [];
 
     public static Dictionary<string, int> DefaultWeaponMaxAmmo = [];
+
+    public static string[] ValidWeapons =
+    [
+        "deagle", "elite", "fiveseven", "glock", "ak47", "aug", "awp", "famas", "g3sg1", "galilar", "m249", "m4a1",
+        "mac10", "p90", "mp5sd", "ump45", "xm1014", "bizon", "mag7", "negev", "sawedoff", "tec9", "hkp2000", "mp7",
+        "mp9", "nova", "p250", "scar20", "sg556", "ssg08", "m4a1_silencer", "usp_silencer", "cz75a", "revolver",
+        "flashbang", "hegrenade", "smokegrenade", "molotov", "decoy", "incgrenade", "taser", "healthshot", "tagrenade",
+        "shield",
+        "knife", "knifegg", "bayonet", "knife_flip", "knife_gut", "knife_karambit", "knife_m9_bayonet",
+        "knife_tactical", "knife_falchion", "knife_survival_bowie", "knife_butterfly", "knife_push", "knife_ursus",
+        "knife_gypsy_jackknife", "knife_stiletto", "knife_widowmaker", "knife_skeleton", "knife_outdoor", "knife_canis",
+        "knife_cord", "knife_css"
+    ];
+
     
     public static void RConVar(
         CCSPlayerController caller, 
@@ -170,6 +184,64 @@ public static class FunFunctions
             [positionKey]
         ));
     }
+    
+    public static void TurnFreeze(
+        CCSPlayerController caller, 
+        CCSPlayerController target, 
+        bool? state,
+        IdentityType identityType = IdentityType.SteamId
+    )
+    {
+        if (!ValidateAliveTarget(caller, target, identityType))
+            return;
+
+        if (state == null)
+        {
+            state = target.PlayerPawn.Value!.MoveType != MoveType_t.MOVETYPE_OBSOLETE;
+        }
+        
+        if ((bool)state)
+        {
+            target.PlayerPawn.Value!.Freeze();
+            caller.Print(Localizer["Message.Freeze"].AReplace(
+                ["target"],
+                [target.PlayerName]
+            ));
+        }
+        else
+        {
+            target.PlayerPawn.Value!.Unfreeze();
+            caller.Print(Localizer["Message.Unfreeze"].AReplace(
+                ["target"],
+                [target.PlayerName]
+            ));
+        }
+    }
+    
+    public static void GiveWeapon(
+        CCSPlayerController caller, 
+        CCSPlayerController target, 
+        string weaponId,
+        IdentityType identityType = IdentityType.SteamId
+    )
+    {
+        if (!ValidateAliveTarget(caller, target, identityType))
+            return;
+
+        if (!ValidWeapons.Contains(weaponId))
+        {
+            caller.Print(Localizer["Error.WeaponNotFound"].AReplace(["value"], [weaponId]));
+            return;
+        }
+        
+        target.GiveNamedItem($"weapon_{weaponId}");
+        
+        caller.Print(Localizer["Message.GiveWeapon"].AReplace(
+            ["target", "value"],
+            [target.PlayerName, Localizer[weaponId]]
+        ));
+    }
+
     
     public static void TurnTeleportOnPing(
         CCSPlayerController caller, 

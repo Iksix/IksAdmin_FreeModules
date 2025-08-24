@@ -10,7 +10,7 @@ namespace IksAdmin_FunCommands;
 public class Main : AdminModule
 {
     public override string ModuleName => "IksAdmin_FunCommands";
-    public override string ModuleVersion => "1.0.4";
+    public override string ModuleVersion => "1.0.6";
     public override string ModuleAuthor => "iks__";
 
     public static PluginConfig Config = null!;
@@ -56,6 +56,10 @@ public class Main : AdminModule
         Api.RegisterPermission("fun_commands.add_damage", defaultFlag);
         Api.RegisterPermission("fun_commands.max_ammo", defaultFlag);
         Api.RegisterPermission("fun_commands.no_recoil", defaultFlag);
+        // [1.0.6]
+        Api.RegisterPermission("fun_commands.freeze", defaultFlag);
+        Api.RegisterPermission("fun_commands.give", defaultFlag);
+        
         
         RegisterEventHandler<EventPlayerHurt>(FunFunctions.OnPlayerHurt);
         RegisterEventHandler<EventRoundEnd>(FunFunctions.OnRoundEnd);
@@ -257,5 +261,25 @@ public class Main : AdminModule
             Cmd.SetNoRecoil,
             minArgs: 2
         );
+        
+        // [1.0.6]
+        Api.AddNewCommand(
+            "freeze",
+            "Set freeze for player",
+            "fun_commands.freeze",
+            "css_freeze <#uid/#steamId/name/@...> [true/false]",
+            Cmd.TurnFreeze,
+            minArgs: 1
+        );
+        
+        Api.AddNewCommand(
+            "give",
+            "Give weapon for player",
+            "fun_commands.give",
+            "css_give <#uid/#steamId/name/@...> <weapon>",
+            Cmd.GiveWeapon,
+            minArgs: 2
+        );
+        
     }
 }

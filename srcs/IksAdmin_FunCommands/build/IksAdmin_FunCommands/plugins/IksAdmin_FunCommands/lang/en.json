@@ -62,5 +62,26 @@
     "Error.MustHandleWeapon" : "{red}The target must be holding a weapon!",
 
     // === [1.0.5] ===
-    "MenuOption.Slap" : "Slap player"
+    "MenuOption.Slap" : "Slap player",
+
+    // === [1.0.6] ===
+
+    "MenuTitle.SpecialTargets" : "Select targets:",
+    "MenuTitle.SelectWeapon" : "Select a weapon:",
+
+    "MenuOption.SpecialTargets" : "Special selection",
+    "MenuOption.Freeze" : "Freeze player",
+    "MenuOption.Unfreeze" : "Unfreeze player",
+    "MenuOption.GiveWeapon" : "Give weapon",
+
+    "MenuOption.Me" : "You",
+    "MenuOption.CT" : "Counter-Terrorists",
+    "MenuOption.T" : "Terrorists",
+    "MenuOption.All" : "All",
+
+    "Message.Freeze" : "Player {red}{name} {white}has been frozen!",
+    "Message.Unfreeze" : "Player {red}{name} {white}has been unfrozen!",
+    "Message.GiveWeapon" : "Player {red}{name} has been given a weapon: {value}",
+
+    "Error.WeaponNotFound" : "{red}Weapon {white}{value}{red} not found!"
 }

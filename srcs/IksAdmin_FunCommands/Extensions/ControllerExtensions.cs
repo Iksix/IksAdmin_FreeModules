@@ -1,5 +1,6 @@
 ﻿using CounterStrikeSharp.API;
 using CounterStrikeSharp.API.Core;
+using CounterStrikeSharp.API.Modules.Memory;
 using CounterStrikeSharp.API.Modules.Utils;
 using IksAdminApi;
 
@@ -28,6 +29,19 @@ public static class ControllerExtensions
         if (playerPawnValue == null) return;
         
         playerPawnValue.Teleport(position.Position, position.Rotation);
+    }
+    
+    public static void Freeze(this CBasePlayerPawn pawn)
+    {
+        pawn.MoveType = MoveType_t.MOVETYPE_OBSOLETE;
+        Schema.SetSchemaValue(pawn.Handle, "CBaseEntity", "m_nActualMoveType", 1); // obsolete
+        Utilities.SetStateChanged(pawn, "CBaseEntity", "m_MoveType");
+    }
+    public static void Unfreeze(this CBasePlayerPawn pawn)
+    {
+        pawn.MoveType = MoveType_t.MOVETYPE_WALK;
+        Schema.SetSchemaValue(pawn.Handle, "CBaseEntity", "m_nActualMoveType", 2); // walk
+        Utilities.SetStateChanged(pawn, "CBaseEntity", "m_MoveType");
     }
 
     public static string? GetActiveWeaponName(this CCSPlayerController player)

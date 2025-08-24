@@ -88,6 +88,18 @@ public static class Menus
             (_, _) => { SetNoRecoil(caller, menu); },
             viewFlags: AdminUtils.GetCurrentPermissionFlags("fun_commands.no_recoil"));
         
+        menu.AddMenuOption("freeze", Localizer["MenuOption.Freeze"],
+            (_, _) => { Freeze(caller, menu); },
+            viewFlags: AdminUtils.GetCurrentPermissionFlags("fun_commands.freeze"));
+        
+        menu.AddMenuOption("unfreeze", Localizer["MenuOption.Unfreeze"],
+            (_, _) => { Unfreeze(caller, menu); },
+            viewFlags: AdminUtils.GetCurrentPermissionFlags("fun_commands.freeze"));
+        
+        menu.AddMenuOption("give", Localizer["MenuOption.GiveWeapon"],
+            (_, _) => { GiveWeapon(caller, menu); },
+            viewFlags: AdminUtils.GetCurrentPermissionFlags("fun_commands.give"));
+        
         menu.Open(caller);
     }
 
@@ -358,6 +370,40 @@ public static class Menus
             FunFunctions.Noclip(caller, target);
         }, includeBots: false);
     }
+    
+    private static void Freeze(CCSPlayerController caller, IDynamicMenu? backMenu)
+    {
+        OpenSelectAlivePlayer(caller, "freeze", backMenu, target =>
+        {
+            FunFunctions.TurnFreeze(caller, target, true);
+        }, includeBots: true);
+    }
+
+    private static void Unfreeze(CCSPlayerController caller, IDynamicMenu? backMenu)
+    {
+        OpenSelectAlivePlayer(caller, "unfreeze", backMenu, target =>
+        {
+            FunFunctions.TurnFreeze(caller, target, false);
+        }, includeBots: true);
+    }
+    
+    private static void GiveWeapon(CCSPlayerController caller, IDynamicMenu? backMenu)
+    {
+        var menu = Api.CreateMenu("fc_select_weapon", Localizer["MenuTitle.SelectWeapon"]);
+
+        foreach (var weapon in FunFunctions.ValidWeapons)
+        {
+            menu.AddMenuOption(weapon, Localizer[weapon], (_, _) =>
+            {
+                OpenSelectAlivePlayer(caller, "give", backMenu, target =>
+                {
+                    FunFunctions.GiveWeapon(caller, target, weapon);
+                }, includeBots: true);
+            });
+        }
+        
+        menu.Open(caller);
+    }
 
     private static void RConVar(CCSPlayerController caller, IDynamicMenu backMenu)
     {
@@ -381,7 +427,12 @@ public static class Menus
     private static void OpenSelectAlivePlayer(CCSPlayerController caller, string prefix, IDynamicMenu? backMenu, Action<CCSPlayerController> action, bool includeBots = true)
     {
         var menu = Api.CreateMenu(prefix + "_select_alive_player", Api.Localizer["MenuTitle.Other.SelectPlayer"], backMenu: backMenu);
-
+        
+        menu.AddMenuOption("special_targets", Localizer["MenuTitle.SpecialTargets"], (_, _) =>
+        {
+            OpenSelectMultiAliveTargets(caller, prefix, action, includeBots, menu);
+        });
+        
         foreach (var player in PlayersUtils.GetOnlinePlayers(includeBots))
         {
             if (!player.IsBot && !Api.CanDoActionWithPlayer(caller.GetSteamId(), player.GetSteamId()))
@@ -399,7 +450,93 @@ public static class Menus
         
         menu.Open(caller);
     }
+
+    private static void OpenSelectMultiAliveTargets(CCSPlayerController caller, string prefix, Action<CCSPlayerController> action, bool includeBots, IDynamicMenu? backMenu = null)
+    {
+        var menu = Api.CreateMenu(prefix + "_select_alive_player", Api.Localizer["MenuTitle.SpecialTargets"], backMenu: backMenu);
+
+        var players = PlayersUtils.GetOnlinePlayers(includeBots);
+        
+        menu.AddMenuOption("me", Localizer["MenuOption.Me"], (_, _) =>
+        {
+            if (!caller.PawnIsAlive)
+            {
+                caller.Print(Localizer["Error.TargetMustBeAlive"]);
+                return;
+            }
+            action.Invoke(caller);
+        });
+
+        menu.AddMenuOption("ct", Localizer["MenuOption.CT"], (_, _) =>
+        {
+            foreach (var player in players.Where(x => x is { TeamNum: 3, PawnIsAlive: true }))
+            {
+                action.Invoke(player);
+            }
+        });
+        
+        menu.AddMenuOption("t", Localizer["MenuOption.T"], (_, _) =>
+        {
+            foreach (var player in players.Where(x => x is { TeamNum: 2, PawnIsAlive: true }))
+            {
+                action.Invoke(player);
+            }
+        });
+        
+        menu.AddMenuOption("all", Localizer["MenuOption.All"], (_, _) =>
+        {
+            foreach (var player in players.Where(x => x is { PawnIsAlive: true }))
+            {
+                action.Invoke(player);
+            }
+        });
+        
+        menu.Open(caller);
+    }
     
+    private static void OpenSelectMultiTargets(CCSPlayerController caller, string prefix, Action<PlayerInfo, IDynamicMenu> action, bool includeBots, IDynamicMenu? backMenu = null)
+    {
+        var menu = Api.CreateMenu(prefix + "_select_alive_player", Api.Localizer["MenuTitle.SpecialTargets"], backMenu: backMenu);
+
+        var players = PlayersUtils.GetOnlinePlayers(includeBots);
+        
+        menu.AddMenuOption("me", Localizer["MenuOption.Me"], (_, _) =>
+        {
+            if (!caller.PawnIsAlive)
+            {
+                caller.Print(Localizer["Error.TargetMustBeAlive"]);
+                return;
+            }
+            action.Invoke(new PlayerInfo(caller), menu);
+        });
+
+        menu.AddMenuOption("ct", Localizer["MenuOption.CT"], (_, _) =>
+        {
+            foreach (var player in players.Where(x => x is { TeamNum: 3 }))
+            {
+                action.Invoke(new PlayerInfo(player), menu);
+            }
+        });
+        
+        menu.AddMenuOption("t", Localizer["MenuOption.T"], (_, _) =>
+        {
+            foreach (var player in players.Where(x => x is { TeamNum: 2 }))
+            {
+                action.Invoke(new PlayerInfo(player), menu);
+            }
+        });
+        
+        menu.AddMenuOption("all", Localizer["MenuOption.All"], (_, _) =>
+        {
+            foreach (var player in players)
+            {
+                action.Invoke(new PlayerInfo(player), menu);
+            }
+        });
+        
+        menu.Open(caller);
+    }
+
     public static void OpenSelectPlayer(CCSPlayerController caller, string idPrefix, Action<PlayerInfo, IDynamicMenu> action, bool includeBots = false, IDynamicMenu? backMenu = null, string? customTitle = null)
     {
         var menu = Api.CreateMenu(
@@ -408,6 +545,11 @@ public static class Menus
             titleColor: MenuColors.Gold,
             backMenu: backMenu
         );
+        
+        menu.AddMenuOption("special_targets", Localizer["MenuOption.SpecialTargets"], (_, _) =>
+        {
+            OpenSelectMultiTargets(caller, idPrefix, action, includeBots, menu);
+        });
 
         var players = PlayersUtils.GetOnlinePlayers(includeBots);
 

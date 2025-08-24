@@ -67,5 +67,26 @@
     "Error.MustHandleWeapon" : "{red}Цель должна держать оружие в руках!",
     
     // === [1.0.5] ===
-    "MenuOption.Slap" : "Шлёпнуть игрока"
+    "MenuOption.Slap" : "Шлёпнуть игрока",
+    
+    // === [1.0.6] ===
+
+    "MenuTitle.SpecialTargets" : "Выберите цели:",
+    "MenuTitle.SelectWeapon" : "Выберите оружие:",
+    
+    "MenuOption.SpecialTargets" : "Специальный выбор",
+    "MenuOption.Freeze" : "Заморозить игрока",
+    "MenuOption.Unfreeze" : "Разморозить игрока",
+    "MenuOption.GiveWeapon" : "Выдать оружие",
+    
+    "MenuOption.Me" : "Вы",
+    "MenuOption.CT" : "Спецназ",
+    "MenuOption.T" : "Террористы",
+    "MenuOption.All" : "Все",
+
+    "Message.Freeze" : "Игрок {red}{name} {white}заморожен!",
+    "Message.Unfreeze" : "Игрок {red}{name} {white}разморожен!",
+    "Message.GiveWeapon" : "Игроку {red}{name} выдано оружие: {value}",
+    
+    "Error.WeaponNotFound" : "{red}Оружие {white}{value}{red} не найдено!"
 }
