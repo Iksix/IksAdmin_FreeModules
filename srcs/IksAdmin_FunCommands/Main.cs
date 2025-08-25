@@ -10,7 +10,7 @@ namespace IksAdmin_FunCommands;
 public class Main : AdminModule
 {
     public override string ModuleName => "IksAdmin_FunCommands";
-    public override string ModuleVersion => "1.0.6";
+    public override string ModuleVersion => "1.0.7";
     public override string ModuleAuthor => "iks__";
 
     public static PluginConfig Config = null!;

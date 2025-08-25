@@ -204,7 +204,7 @@ public static class FunFunctions
         {
             target.PlayerPawn.Value!.Freeze();
             caller.Print(Localizer["Message.Freeze"].AReplace(
-                ["target"],
+                ["name"],
                 [target.PlayerName]
             ));
         }
@@ -212,7 +212,7 @@ public static class FunFunctions
         {
             target.PlayerPawn.Value!.Unfreeze();
             caller.Print(Localizer["Message.Unfreeze"].AReplace(
-                ["target"],
+                ["name"],
                 [target.PlayerName]
             ));
         }
@@ -237,7 +237,7 @@ public static class FunFunctions
         target.GiveNamedItem($"weapon_{weaponId}");
         
         caller.Print(Localizer["Message.GiveWeapon"].AReplace(
-            ["target", "value"],
+            ["name", "value"],
             [target.PlayerName, Localizer[weaponId]]
         ));
     }

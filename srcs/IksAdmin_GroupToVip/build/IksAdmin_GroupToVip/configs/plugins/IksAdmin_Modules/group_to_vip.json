@@ -1,0 +1,17 @@
+{
+
+  // ONLY FOR VIP BY PISEX
+  "VipByPisex": false,
+  "Host": "host",
+  "Database": "db",
+  "User": "user",
+  "Pass": "pass",
+  "Port": 3306,
+  "Sid": 1,
+  // =====================
+
+  "AGroupToVip": {
+    "Admin Group": "VIP Group",
+    "Admin Group2": "VIP Group2" 
+  }
+}

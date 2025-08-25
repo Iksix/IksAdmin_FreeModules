@@ -105,15 +105,16 @@ public static class Menus
 
     private static void SetMoney(CCSPlayerController caller, IDynamicMenu? backMenu)
     {
-        OpenSelectPlayer(caller, "set_money", (target, _) =>
+        Api.HookNextPlayerMessage(caller, amount =>
         {
-            caller.Print(Localizer["Request.MoneyAmount"]);
-            
-            Api.HookNextPlayerMessage(caller, amount =>
+            OpenSelectPlayer(caller, "set_money", (target, _) =>
             {
+                caller.Print(Localizer["Request.MoneyAmount"]);
+            
                 FunFunctions.SetMoney(caller, target.Controller!, int.Parse(amount));
-            });
-        }, backMenu: backMenu);
+            }, backMenu: backMenu);
+        });
+        
     }
     
     private static void SavePosition(CCSPlayerController caller, IDynamicMenu? backMenu)
@@ -216,122 +217,132 @@ public static class Menus
     
     private static void SetShootSpeed(CCSPlayerController caller, IDynamicMenu? backMenu)
     {
-        OpenSelectAlivePlayer(caller, "set_shootspeed", backMenu, target =>
+        Api.HookNextPlayerMessage(caller, amount =>
         {
-            var weapon = caller.GetActiveWeaponName();
-            
-            if (weapon == null)
+            OpenSelectAlivePlayer(caller, "set_shootspeed", backMenu, target =>
             {
-                caller.Print(Localizer["Error.MustHandleWeapon"]);
-                return;
-            }
+                var weapon = caller.GetActiveWeaponName();
             
-            caller.Print(Localizer["Request.ShootSpeed"].AReplace(["weapon"], [weapon]));
+                if (weapon == null)
+                {
+                    caller.Print(Localizer["Error.MustHandleWeapon"]);
+                    return;
+                }
             
-            Api.HookNextPlayerMessage(caller, amount =>
-            {
+                caller.Print(Localizer["Request.ShootSpeed"].AReplace(["weapon"], [weapon]));
+                
                 FunFunctions.SetShootSpeed(caller, target, amount == "default" ? null : float.Parse(amount));
-            });
-        }, includeBots: false);
+            
+            }, includeBots: false);
+        });
     }
     
     private static void SetCustomDamage(CCSPlayerController caller, IDynamicMenu? backMenu)
     {
-        OpenSelectAlivePlayer(caller, "set_custom_damage", backMenu, target =>
+        Api.HookNextPlayerMessage(caller, amount =>
         {
-            var weapon = caller.GetActiveWeaponName();
-            
-            if (weapon == null)
+            OpenSelectAlivePlayer(caller, "set_custom_damage", backMenu, target =>
             {
-                caller.Print(Localizer["Error.MustHandleWeapon"]);
-                return;
-            }
+                var weapon = caller.GetActiveWeaponName();
             
-            caller.Print(Localizer["Request.CustomDamage"].AReplace(["weapon"], [weapon]));
+                if (weapon == null)
+                {
+                    caller.Print(Localizer["Error.MustHandleWeapon"]);
+                    return;
+                }
             
-            Api.HookNextPlayerMessage(caller, amount =>
-            {
+                caller.Print(Localizer["Request.CustomDamage"].AReplace(["weapon"], [weapon]));
+                
                 FunFunctions.SetCustomDamage(caller, target, amount == "default" ? null : int.Parse(amount));
-            });
-        }, includeBots: false);
+            
+            }, includeBots: false);
+        });
+        
     }
     
     private static void SetBonusDamage(CCSPlayerController caller, IDynamicMenu? backMenu)
     {
-        OpenSelectAlivePlayer(caller, "set_bonus_damage", backMenu, target =>
+        Api.HookNextPlayerMessage(caller, amount =>
         {
-            var weapon = caller.GetActiveWeaponName();
-            
-            if (weapon == null)
+            OpenSelectAlivePlayer(caller, "set_bonus_damage", backMenu, target =>
             {
-                caller.Print(Localizer["Error.MustHandleWeapon"]);
-                return;
-            }
+                var weapon = caller.GetActiveWeaponName();
             
-            caller.Print(Localizer["Request.BonusDamage"].AReplace(["weapon"], [weapon]));
+                if (weapon == null)
+                {
+                    caller.Print(Localizer["Error.MustHandleWeapon"]);
+                    return;
+                }
             
-            Api.HookNextPlayerMessage(caller, amount =>
-            {
+                caller.Print(Localizer["Request.BonusDamage"].AReplace(["weapon"], [weapon]));
+            
                 FunFunctions.SetBonusDamage(caller, target, amount == "default" ? null : int.Parse(amount));
-            });
-        }, includeBots: false);
+            
+            }, includeBots: false);
+        });
     }
     
     private static void SetMaxAmmo(CCSPlayerController caller, IDynamicMenu? backMenu)
     {
-        OpenSelectAlivePlayer(caller, "max_ammo", backMenu, target =>
+        Api.HookNextPlayerMessage(caller, amount =>
         {
-            var weapon = caller.GetActiveWeaponName();
-            
-            if (weapon == null)
+            OpenSelectAlivePlayer(caller, "max_ammo", backMenu, target =>
             {
-                caller.Print(Localizer["Error.MustHandleWeapon"]);
-                return;
-            }
+                var weapon = caller.GetActiveWeaponName();
             
-            caller.Print(Localizer["Request.MaxAmmo"].AReplace(["weapon"], [weapon]));
+                if (weapon == null)
+                {
+                    caller.Print(Localizer["Error.MustHandleWeapon"]);
+                    return;
+                }
             
-            Api.HookNextPlayerMessage(caller, amount =>
-            {
+                caller.Print(Localizer["Request.MaxAmmo"].AReplace(["weapon"], [weapon]));
+                
                 FunFunctions.SetMaxAmmo(caller, target, amount == "default" ? null : int.Parse(amount));
+            
             });
         });
+        
     }
 
     private static void SetHp(CCSPlayerController caller, IDynamicMenu? backMenu)
     {
-        OpenSelectAlivePlayer(caller, "set_hp", backMenu, target =>
+        Api.HookNextPlayerMessage(caller, amount =>
         {
-            caller.Print(Localizer["Request.HpAmount"]);
-            
-            Api.HookNextPlayerMessage(caller, amount =>
+            OpenSelectAlivePlayer(caller, "set_hp", backMenu, target =>
             {
+                caller.Print(Localizer["Request.HpAmount"]);
+                
                 FunFunctions.SetHp(caller, target, int.Parse(amount));
+            
             });
         });
+        
     }
     
     private static void SetSpeed(CCSPlayerController caller, IDynamicMenu? backMenu)
     {
-        OpenSelectAlivePlayer(caller, "set_speed", backMenu, target =>
+        Api.HookNextPlayerMessage(caller, amount =>
         {
-            caller.Print(Localizer["Request.Speed"]);
-            
-            Api.HookNextPlayerMessage(caller, amount =>
+            OpenSelectAlivePlayer(caller, "set_speed", backMenu, target =>
             {
+                caller.Print(Localizer["Request.Speed"]);
+                
                 FunFunctions.SetSpeed(caller, target, float.Parse(amount));
+            
             });
         });
+        
     }
     
     private static void SetScale(CCSPlayerController caller, IDynamicMenu? backMenu)
     {
-        OpenSelectAlivePlayer(caller, "set_scale", backMenu, target =>
+        Api.HookNextPlayerMessage(caller, amount =>
         {
-            caller.Print(Localizer["Request.Scale"]);
-            
-            Api.HookNextPlayerMessage(caller, amount =>
+            OpenSelectAlivePlayer(caller, "set_scale", backMenu, target =>
             {
+                caller.Print(Localizer["Request.Scale"]);
+            
                 FunFunctions.SetScale(caller, target, float.Parse(amount));
             });
         });
@@ -339,28 +350,31 @@ public static class Menus
     
     private static void AddMoney(CCSPlayerController caller, IDynamicMenu? backMenu)
     {
-        OpenSelectPlayer(caller, "add_money", (target, _) =>
+        Api.HookNextPlayerMessage(caller, amount =>
         {
-            caller.Print(Localizer["Request.MoneyAmount"]);
-            
-            Api.HookNextPlayerMessage(caller, amount =>
+            OpenSelectPlayer(caller, "add_money", (target, _) =>
             {
+                caller.Print(Localizer["Request.MoneyAmount"]);
+                
                 FunFunctions.AddMoney(caller, target.Controller!, int.Parse(amount));
-            });
-        }, backMenu: backMenu);
+                
+            }, backMenu: backMenu);
+        });
+        
     }
     
     private static void TakeMoney(CCSPlayerController caller, IDynamicMenu? backMenu)
     {
-        OpenSelectPlayer(caller, "take_money", (target, _) =>
+        Api.HookNextPlayerMessage(caller, amount =>
         {
-            caller.Print(Localizer["Request.MoneyAmount"]);
-
-            Api.HookNextPlayerMessage(caller, amount =>
+            OpenSelectPlayer(caller, "take_money", (target, _) =>
             {
+                caller.Print(Localizer["Request.MoneyAmount"]);
+
                 FunFunctions.TakeMoney(caller, target.Controller!, int.Parse(amount));
-            });
-        }, backMenu: backMenu);
+            
+            }, backMenu: backMenu);
+        });
     }
 
     private static void Noclip(CCSPlayerController caller, IDynamicMenu? backMenu)
