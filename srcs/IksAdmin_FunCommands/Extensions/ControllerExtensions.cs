@@ -49,12 +49,20 @@ public static class ControllerExtensions
         if (!player.PawnIsAlive) return null;
         
         var playerPawn = player.PlayerPawn.Value!;
-        
-        if (playerPawn.WeaponServices == null) return null;
-        
-        var activeWeapon = playerPawn.WeaponServices.ActiveWeapon.Value!.GetVData<CCSWeaponBaseVData>()!.Name;
 
-        return activeWeapon;
+        var ws = playerPawn.WeaponServices;
+        
+        if (ws == null) return null;
+
+        var activeWeapon = ws.ActiveWeapon.Value;
+        
+        if (activeWeapon == null) return null;
+
+        var vdata = activeWeapon.GetVData<CCSWeaponBaseVData>();
+        
+        if (vdata == null) return null;
+        
+        return vdata.Name;
     }
     
     public static CBasePlayerWeapon? GetActiveWeapon(this CCSPlayerController player)
