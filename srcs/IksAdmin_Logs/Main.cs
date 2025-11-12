@@ -125,13 +125,13 @@ public class Main : AdminModule
         switch (type)
         {
             case 0:
-                return "Mute";
+                return Localizer["Mute"];
             case 1:
-                return "Gag";
+                return Localizer["Gag"];
             case 2:
-                return "Silence";
+                return Localizer["Silence"];
             default:
-                return "Mute";
+                return Localizer["Mute"];
         }
     }
     private string Team(int type) {
@@ -150,6 +150,20 @@ public class Main : AdminModule
         }
     }
 
+    private string GetUncommActionString(int commType)
+    {
+        switch (commType)
+        {
+            case 0:
+                return Localizer["Action.UnMute"];
+            case 1:
+                return Localizer["Action.UnGag"];
+            case 2:
+                return Localizer["Action.UnSilence"];
+        }
+
+        return "";
+    }
 
     private void OnUnComm(Admin admin, PlayerComm comm)
     {
@@ -157,8 +171,8 @@ public class Main : AdminModule
             string embedKey = "uncomm";
             var embed = GetEmbed(embedKey);
             embed.SetKeyValues(
-                ["admin", "adminId", "reason", "target", "targetIp", "targetId", "type"],
-                admin.CurrentName, admin.SteamId, comm.UnbanReason ?? "", comm.Name ?? "", comm.Ip ?? "", comm.SteamId ?? "", CommType(comm.MuteType)
+                ["action", "admin", "adminId", "reason", "target", "targetIp", "targetId", "type"],
+                GetUncommActionString(comm.MuteType), admin.CurrentName, admin.SteamId, comm.UnbanReason ?? "", comm.Name ?? "", comm.Ip ?? "", comm.SteamId ?? "", CommType(comm.MuteType)
             );
             _logger.LogToAll(embed.ReplaceKeyValues(Localizer[embedKey]), vkChatId: _config.VkChatId, discordEmebed: embed, discordChannel: GetDiscordChannel(embedKey));
         });

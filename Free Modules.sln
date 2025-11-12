@@ -18,8 +18,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IksAdmin_GroupToVip", "srcs
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IksAdmin_VipManage", "srcs\IksAdmin_VipManage\IksAdmin_VipManage.csproj", "{C5A44473-7F8C-427F-BD23-6AE0B2442D59}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlagsConvert", "srcs\FlagsConvert\FlagsConvert.csproj", "{DC376437-672D-4709-922B-E23F136AC4EC}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,10 +52,6 @@ Global
 		{C5A44473-7F8C-427F-BD23-6AE0B2442D59}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C5A44473-7F8C-427F-BD23-6AE0B2442D59}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C5A44473-7F8C-427F-BD23-6AE0B2442D59}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DC376437-672D-4709-922B-E23F136AC4EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DC376437-672D-4709-922B-E23F136AC4EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DC376437-672D-4709-922B-E23F136AC4EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DC376437-672D-4709-922B-E23F136AC4EC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -70,7 +64,6 @@ Global
 		{6E5D4930-EA12-001C-93D3-CB6D3152B4B0} = {1AD75E5E-73A9-862F-C199-91926D19870C}
 		{9F30A796-6F20-4EC4-8D31-CD56052A7EC9} = {1AD75E5E-73A9-862F-C199-91926D19870C}
 		{C5A44473-7F8C-427F-BD23-6AE0B2442D59} = {1AD75E5E-73A9-862F-C199-91926D19870C}
-		{DC376437-672D-4709-922B-E23F136AC4EC} = {1AD75E5E-73A9-862F-C199-91926D19870C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2B6B44D0-CB72-40A4-97BF-304F72A86485}
